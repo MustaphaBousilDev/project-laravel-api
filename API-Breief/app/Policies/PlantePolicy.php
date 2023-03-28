@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Plant;
+use App\Models\Plante;
 class PlantePolicy
 {
     /**
@@ -20,16 +20,16 @@ class PlantePolicy
 
     public function create(User $user)
     {
-        return $user->role === 1 ||  $user->isAdmin();
+        return $user->role === 1 ||  $user->isAdmin(); 
     }
 
-    public function update(User $user, Plant $plant)
+    public function update(User $user, Plante $plante)
     {
-        return $user->id === $plant->user_id ||  $user->isAdmin();
+        return $user->id === $plante->user_id ||  $user->isAdmin();
     }
 
-    public function delete(User $user, Plant $plant)
+    public function delete(User $user, Plante $plante)
     {
-        return $user->id === $plant->user_id ||  $user->isAdmin();
+        return $user->id === $plante->user_id ||  $user->isAdmin();
     }
 }

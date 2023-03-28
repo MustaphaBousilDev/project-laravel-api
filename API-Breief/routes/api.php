@@ -33,6 +33,14 @@ Route::controller(AuthController::class)->group(function(){
 
 Route::post('password-reset/{token}',[AuthController::class, 'updatePassword']);
 Route::apiResource('plants', PlanteController::class);
+//delete plante 
+Route::delete('plantss/{plante}',[PlanteController::class, 'destroy']);
+//iupdate 
+Route::put('plantss/{plante}',[PlanteController::class, 'update']);
 Route::apiResource('categories', CategoryController::class);
+
+
+//route change role 
+Route::put('changeRole/{user}',[AuthController::class, 'changeRole']);
 
 

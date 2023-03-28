@@ -24,11 +24,7 @@ class UpdatePlanteRequest extends FormRequest
         return [
             //
             'name' => 'required|string',
-            'description' => 'required|string',
-            'price' => 'required|numeric',
-            'image' => 'required|string',
-            'category_id' => 'required|integer',
-            'user_id' =>'required|integer'
+            
 
         ];
     }

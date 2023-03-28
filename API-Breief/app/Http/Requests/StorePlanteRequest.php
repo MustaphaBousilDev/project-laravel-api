@@ -12,7 +12,7 @@ class StorePlanteRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
-    }
+    } 
 
     /**
      * Get the validation rules that apply to the request.
@@ -24,11 +24,7 @@ class StorePlanteRequest extends FormRequest
         return [
             //
             'name' => 'required|string',
-            'description' => 'required|string',
-            'price' => 'required|numeric',
-            'image' => 'required|string',
-            'category_id' => 'required|integer',
-            'user_id' =>'required|integer'
+            
         ];
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Plante;
-use Illuminate\Http\Request;
 use App\Http\Requests\StorePlanteRequest;
 use App\Http\Requests\UpdatePlanteRequest;
 
@@ -20,61 +19,48 @@ class PlanteController extends Controller{
     }
     public function store(StorePlanteRequest $request){
         //
-        $plante=Plante::create($request->all());
+        $this->authorize('create', Plante::class);
+        $validated = $request->validated();
+        $plante = Plante::create($validated);
         return response()->json([
-            'status'=>'success',
-            'message'=>'Plante created succesfully',
-            'plante'=>$plante
-        ],201);    
+            'message' => 'Plant created successfully',
+            'plant' => $plante
+        ]);
     }
     public function show(Plante $plante){
-        //get id from the route
-        $plante=Plante::find($plante->id);
-        //check if not success
-        if(!$plante){
-            return response()->json(['status'=>'error','message'=>'Plante not found'],404);
-        }
-        return response()->json([
-            'status'=>'success',
-            'message'=>'Plante found succesfully',
-            'plante'=>$plante],200);
-    }
-    public function edit(Request $request){
         //
-        //get id from the route
-        $plante=Plante::find($request->id);
-        //check if not success
+        //find article 
+        
+        $plante=Plante::with('category')->find($plante->id);
         if(!$plante){
             return response()->json(['status'=>'error','message'=>'Plante not found'],404);
         }
-        return response()->json([
-            'status'=>'success',
-            'message'=>'Plante found succesfully',
-            'plante'=>$plante],200);
+        return response()->json(['status'=>'success','plante'=>$plante],200);
+    }
+    public function edit(Plante $plante){
+        //
     }
     public function update(UpdatePlanteRequest $request, Plante $plante){
         //
-        $plante->update($request->all());
+        $this->authorize('update', $plante);
+        $validated=$request->validated();
+        //update 
+        $plante->update($validated);
+        return response()->json([
+            'message'=>'success',
+            'plant'=>$plante
+        ]);
         
-        //check if the article is updated
-        if($plante->wasChanged()){
-            return response()->json([
-                'status'=>'success',
-                'message'=>'Plante updated succesfully',
-                'plante'=>$plante],200);
-        }
     }
     public function destroy(Plante $plante)
     {
         //
+        $this->authorize('delete', $plante);
+        //dd($plante);
         $plante->delete();
-        //check if not success
-        if(!$plante){
-            return response()->json(['status'=>'error','message'=>'Plante not found'],404);
-        }
         return response()->json([
-            'status'=>'success',
-            'message'=>'Plante deleted succesfully'],200);
-
+            'message' => 'Plant deleted successfully',
+            'plante' => $plante
+        ]);
     }
 }

@@ -158,5 +158,24 @@ class AuthController extends Controller
         ]);
         
     }
+    //update user role by admin 
+    public function changeRole($id){
+         if(Auth::user()->role == 0){
+            $user = User::find($id);
+            $user->role=1;
+            $user->save();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'User role updated successfully',
+                'user' => $user,
+            ]);
+         }else{
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized',
+            ]);
+         }
+    }
+
 
 }
